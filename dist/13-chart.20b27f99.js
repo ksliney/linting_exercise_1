@@ -110,9 +110,15 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   d3.csv("eating-data.csv").then(ready).catch(function (err) {
     console.log("Failed with", err);
   });
-  var width = 600;
-  var height = 700;
-  var svg = d3.select("#chart13").append("svg").attr("height", height).attr("width", width).append("g").attr("transform", "translate(25, 25)");
+  var margin = {
+    top: 30,
+    left: 30,
+    right: 30,
+    bottom: 30
+  };
+  var height = 700 - margin.top - margin.bottom;
+  var width = 600 - margin.left - margin.right;
+  var svg = d3.select("#chart13").append('svg').attr('height', height + margin.top + margin.bottom).attr('width', width + margin.left + margin.right).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
   var widthScale = d3.scaleLinear().domain([0, 10]).range([0, 500]);
   var colorScale = d3.scaleOrdinal().range(["blue", "red", "green"]);
 

@@ -20,9 +20,9 @@ var width = 600 - margin.left - margin.right
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
   let xPositionScale = d3
-  .scaleLinear()
-  .domain([0, 10])
-  .range([0, width])
+    .scaleBand()
+    .domain(["Stevie", "Nicholas", "Bubbletree", "Particle", "Jumpup", "Parlay", "Hio"])
+    .range([0, width]);
 
   let yPositionScale = d3
   .scaleLinear()
@@ -34,11 +34,6 @@ var width = 600 - margin.left - margin.right
     .scaleLinear()
     .domain([0, 12])
     .range([height, 0]);
-
-  var xScale = d3
-    .scaleBand()
-    .domain(["Stevie", "Nicholas", "Bubbletree", "Particle", "Jumpup", "Parlay", "Hio"])
-    .range([0, width]);
 
   const colorScale = d3
     .scaleOrdinal()
@@ -58,13 +53,16 @@ var width = 600 - margin.left - margin.right
       .append("rect")
       .attr("width", 50)
       .attr("height", function(d, i) {
-        return heightScale(d.hamburgers);
+        return height - yPositionScale(d.hamburgers);
       })
       .attr("fill", function(d, i) {
         return colorScale(d.animal);
       })
       .attr("x", function(d, i) {
-        return xScale(d.name);
+        return xPositionScale(d.name);
+      })
+      .attr("y", function(d, i) {
+        return yPositionScale(d.hamburgers);
       })
       .attr("opacity", 0.5);
 
@@ -83,10 +81,10 @@ var width = 600 - margin.left - margin.right
         .call(yAxis)
       
 
-    // svg
-    //   .append("text")
-    //   .attr("x", 250)
-    //   .attr("y", -10)
-    //   .text("animals");
+    svg
+      .append("text")
+      .attr("x", 100)
+      .attr("y", -10)
+      .text("How many hamburgers do these pet animals eat?");
   }
 })();
