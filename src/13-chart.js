@@ -6,10 +6,10 @@
       console.log("Failed with", err);
     });
 
-var margin = { top: 30, left: 30, right: 30, bottom: 30 }
+var margin = { top: 30, left: 50, right: 30, bottom: 30 }
 
-var height = 700 - margin.top - margin.bottom
-var width = 600 - margin.left - margin.right
+var height = 600 - margin.top - margin.bottom
+var width = 700 - margin.left - margin.right
 
   var svg = d3
     .select("#chart13")
@@ -23,7 +23,7 @@ var width = 600 - margin.left - margin.right
   const widthScale = d3
     .scaleLinear()
     .domain([0, 10])
-    .range([0, 500]);
+    .range([0, width]);
 
   const colorScale = d3.scaleOrdinal().range(["blue", "red", "green"]);
 
@@ -33,7 +33,7 @@ var width = 600 - margin.left - margin.right
     const xPositionScale = d3
       .scaleLinear()
       .domain([0, 15])
-      .range([0, 550]);
+      .range([0, width]);
 
     var names = datapoints.map(function(d) {
       return d.name;
@@ -41,8 +41,8 @@ var width = 600 - margin.left - margin.right
 
     var yScale = d3
       .scaleBand()
-      .domain(names)
-      .range([600, 0]);
+      .domain(["Stevie", "Nicholas", "Bubbletree", "Particle", "Jumpup", "Parlay", "Hio"])
+      .range([height, 0]);
 
     svg
       .selectAll("rect")
@@ -61,22 +61,20 @@ var width = 600 - margin.left - margin.right
       })
       .attr("opacity", 0.5);
 
-    var xAxis = d3.axisBottom(xPositionScale).ticks(10);
-
+        /* Set up axes */
+    const xAxis = d3.axisBottom(xPositionScale).ticks(10);
     svg
-      .append("g")
-      .attr("class", "axis x-axis")
-      .attr("transform", "translate(0," + 600 + ")")
+      .append('g')
+      .attr('class', 'axis x-axis')
+      .attr('transform', 'translate(0,' + height + ')')
       .call(xAxis)
-      .lower();
 
+    const yAxis = d3.axisLeft(yScale).ticks(7)
     svg
-      .append("text")
-      .attr("x", 200)
-      .attr("y", 650)
-      .text("hamburgers consumed");
+      .append('g')
+      .attr('class', 'axis y-axis')
+      .call(yAxis)
 
-    var yAxis = d3.axisLeft(names).ticks(7);
 
     svg
       .append("g")
